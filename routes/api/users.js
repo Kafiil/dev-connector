@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
+const validateRegisterInput = require('../../validations/register');
+const validateLoginInput = require('../../validations/login');
 
 router.get('/', (req, res) => {
   User.find({}, (err, users) => {
@@ -13,6 +15,12 @@ router.get('/', (req, res) => {
 });
 
 router.post('/register', (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
@@ -53,6 +61,12 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   email = req.body.email;
   password = req.body.password;
+
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
 
   User.findOne({ email }).then(user => {
     if (!user) return res.status(404).json({ email: 'User not found' });
