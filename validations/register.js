@@ -1,12 +1,11 @@
 const validator = require('validator');
-const isEmpty = require('./utils').isEmpty;
-const validateFields = require('./utils').validateFields;
+const { isEmpty, validateFields } = require('./utils');
 
 module.exports = function validateRegisterInput(data) {
   errors = {};
 
   const checkedFields = ['name', 'email', 'password', 'password2'];
-  validateFields(checkedFields, data);
+  data = validateFields(checkedFields, data);
 
   if (!validator.isLength(data.name, { min: 2, max: 30 })) {
     errors.name = 'Name must be between 2 and 30 characters';
@@ -32,12 +31,12 @@ module.exports = function validateRegisterInput(data) {
     errors.password = 'Password field is required';
   }
 
-  if (validator.isEmpty(data.password2)) {
-    errors.password2 = 'Confirm Password field is required';
-  }
-
   if (!validator.equals(data.password, data.password2)) {
     errors.password2 = 'Passwords must match';
+  }
+
+  if (validator.isEmpty(data.password2)) {
+    errors.password2 = 'Confirm Password field is required';
   }
 
   return {

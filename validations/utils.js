@@ -1,11 +1,18 @@
-module.exports.isEmpty = isEmpty = value =>
+const isEmpty = value =>
   value === undefined ||
   value === null ||
   (typeof value == 'object' && Object.keys(value) == 0) ||
   (typeof value == 'string' && value.trim().length == 0);
 
-module.exports.validateFields = validateFields = (fields, data) => {
+const validateFields = (fields, data) => {
+  const result = {};
   fields.forEach(i => {
-    data[i] = isEmpty(data[i]) ? '' : data[i];
+    result[i] = isEmpty(data[i]) ? '' : data[i];
   });
+  return result;
+};
+
+module.exports = {
+  isEmpty,
+  validateFields
 };

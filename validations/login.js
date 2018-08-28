@@ -1,12 +1,12 @@
 const validator = require('validator');
-const isEmpty = require('./utils').isEmpty;
-const validateFields = require('./utils').validateFields;
+const { isEmpty, validateFields } = require('./utils');
 
 module.exports = function validateLoginInput(data) {
   errors = {};
 
   const checkedFields = ['email', 'password'];
-  validateFields(checkedFields, data);
+  data = validateFields(checkedFields, data);
+  console.log(data);
 
   if (validator.isEmpty(data.email)) {
     errors.email = 'Email field is required';
