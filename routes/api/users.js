@@ -8,8 +8,9 @@ const passport = require('passport');
 const validateRegisterInput = require('../../validations/register');
 const validateLoginInput = require('../../validations/login');
 
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
   User.find({}, (err, users) => {
+    if (err) res.status(500).json(err);
     res.json(users);
   });
 });
