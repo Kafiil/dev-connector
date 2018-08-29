@@ -5,11 +5,11 @@ const isEmpty = value =>
   (typeof value == 'string' && value.trim().length == 0);
 
 const validateFields = (fields, data) => {
-  const result = {};
+  let result = {};
   fields.forEach(i => {
     result[i] = isEmpty(data[i]) ? '' : data[i];
   });
-  return result;
+  return { ...data, ...result };
 };
 
 module.exports = {
