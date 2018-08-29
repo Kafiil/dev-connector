@@ -1,8 +1,11 @@
 const router = require('express').Router();
+const experienceRoutes = require('./experiences');
 const passport = require('passport');
 
 const Profile = require('../../models/Profile');
 const validateProfileInput = require('../../validations/profile');
+
+router.use('/experience', experienceRoutes);
 
 router.get(
   '/',
