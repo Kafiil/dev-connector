@@ -34,6 +34,31 @@ router.post(
       .catch(_ => console.log('Some serious shit happened'));
   }
 );
+
+router.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        if (!profile) {
+          errors.noprofile = 'There is no corresponding profile';
+          return res.status(400).json(errors);
+        }
+
+        const index = profile.education.findIndex(e => e.id == req.params.id);
+        profile.education.splice(index, 1);
+        profile
+          .save()
+          .then(profile => res.json(profile))
+          .catch(err => {
+            errors.nosave = "couldn't remove the education";
+            return res.json(errors);
+          });
+      })
+      .catch(_ => console.log('Some serious shit happened'));
+  }
+);
 module.exports = router;
 
 bodyToEducation = body => {
