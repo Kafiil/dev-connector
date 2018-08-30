@@ -4,7 +4,9 @@ const passport = require('passport');
 const validatePostInput = require('../../validations/post');
 
 router.get('/', (req, res) => {
-  Post.find().then(posts => res.json(posts));
+  Post.find()
+    .sort({ date: -1 })
+    .then(posts => res.json(posts));
 });
 
 router.post(
