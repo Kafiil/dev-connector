@@ -141,4 +141,6 @@ router.post(
   }
 );
 
+// TODO: Implement a delete profile feature
+
 module.exports = router;
