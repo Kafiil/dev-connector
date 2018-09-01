@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { HashRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import MainNavbar from './components/layout/MainNavbar';
 import Footer from './components/layout/Footer';
@@ -12,7 +12,7 @@ import Register from './components/auth/Register';
 class App extends Component {
   render() {
     return (
-      <HashRouter>
+      <BrowserRouter>
         <div>
           <MainNavbar />
           <Route exact path="/" component={Landing} />
@@ -22,7 +22,7 @@ class App extends Component {
           </div>
           <Footer />
         </div>
-      </HashRouter>
+      </BrowserRouter>
     );
   }
 }
