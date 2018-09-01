@@ -6,7 +6,9 @@ class App extends Component {
     return (
       <div>
         <header>
-          <h1 className="red">Welcome to React</h1>
+          <h1 className="text-center">
+            Welcome to <i className="fab fa-spin fa-react" />
+          </h1>
         </header>
       </div>
     );
