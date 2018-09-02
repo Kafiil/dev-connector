@@ -58,7 +58,7 @@ export default class MainNavbar extends Component {
                   onClick={this.toggleItem}
                   to="/login"
                 >
-                  &nbsp; Sign In
+                  &nbsp; Log In
                 </Link>
               </NavItem>
               <NavItem>

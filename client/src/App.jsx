@@ -15,6 +15,17 @@ import Register from './components/auth/Register';
 // Css
 import './App.css';
 
+import jwt_decode from 'jwt-decode';
+import setAuthToken from './utils/setAuthToken';
+import { setCurrentUser } from './actions/authActions';
+
+const token = localStorage.jwtToken;
+if (token) {
+  setAuthToken(token);
+  const decoded = jwt_decode(token);
+  store.dispatch(setCurrentUser(decoded));
+}
+
 export default class App extends Component {
   render() {
     return (
