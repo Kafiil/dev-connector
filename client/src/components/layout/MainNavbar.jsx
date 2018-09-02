@@ -11,6 +11,10 @@ export default class MainNavbar extends Component {
     };
   }
 
+  toggleItem = () => {
+    if (this.state.isOpen) this.setState({ isOpen: false });
+  };
+
   toggle = () => {
     this.setState({
       isOpen: !this.state.isOpen
@@ -28,12 +32,20 @@ export default class MainNavbar extends Component {
             {/* Auth Nav */}
             <Nav navbar>
               <NavItem>
-                <Link className="nav-link" to="/profiles">
+                <Link
+                  className="nav-link"
+                  onClick={this.toggleItem}
+                  to="/profiles"
+                >
                   &nbsp; Profiles
                 </Link>
               </NavItem>
               <NavItem>
-                <Link className="nav-link" to="/users">
+                <Link
+                  className="nav-link"
+                  onClick={this.toggleItem}
+                  to="/users"
+                >
                   &nbsp; Users
                 </Link>
               </NavItem>
@@ -41,12 +53,20 @@ export default class MainNavbar extends Component {
             {/* Menu Nav */}
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <Link className="nav-link" to="/login">
+                <Link
+                  className="nav-link"
+                  onClick={this.toggleItem}
+                  to="/login"
+                >
                   &nbsp; Sign In
                 </Link>
               </NavItem>
               <NavItem>
-                <Link className="nav-link" to="/register">
+                <Link
+                  className="nav-link"
+                  onClick={this.toggleItem}
+                  to="/register"
+                >
                   &nbsp; Register
                 </Link>
               </NavItem>
