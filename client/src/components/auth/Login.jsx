@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import classnames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 import { loginUser } from '../../actions/authActions';
 
@@ -16,7 +16,11 @@ class Login extends Component {
     super();
     this.state = this.initialState;
   }
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const loginInfo = {
@@ -24,6 +28,13 @@ class Login extends Component {
       password: this.state.password
     };
     this.props.loginUser(loginInfo, this.props.history);
+  };
+
+  componentDidMount = () => {
+    // Redirect if the user in already logged in
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/');
+    }
   };
 
   componentWillReceiveProps = nextProps => {
@@ -41,43 +52,22 @@ class Login extends Component {
       <div>
         <h1 className="text-center">Log In</h1>
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              onChange={this.handleChange}
-              value={this.state.email}
-              className={classnames('form-control', {
-                'is-invalid': errors.email
-              })}
-              name="email"
-              id="email"
-              placeholder="email"
-            />
-            {errors.email && (
-              <div className="invalid-feedback">{errors.email}</div>
-            )}
-          </div>
+          <TextFieldGroup
+            name="email"
+            type="email"
+            onChange={this.handleChange}
+            value={this.state.email}
+            error={errors.email}
+          />
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              onChange={this.handleChange}
-              value={this.state.password}
-              className={classnames('form-control', {
-                'is-invalid': errors.password
-              })}
-              name="password"
-              id="password"
-              placeholder="password"
-            />
-            {errors.password && (
-              <div className="invalid-feedback">{errors.password}</div>
-            )}
-          </div>
+          <TextFieldGroup
+            name="password"
+            type="password"
+            onChange={this.handleChange}
+            value={this.state.password}
+            error={errors.password}
+          />
 
-          <br />
           <button type="submit" className="btn btn-primary">
             Log In
           </button>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class Register extends Component {
   initialState = {
@@ -17,7 +17,11 @@ class Register extends Component {
     super();
     this.state = this.initialState;
   }
-  handleChange = e => this.setState({ [e.target.name]: e.target.value });
+
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const newUser = {
@@ -27,6 +31,13 @@ class Register extends Component {
       password2: this.state.password2
     };
     this.props.registerUser(newUser, this.props.history);
+  };
+
+  componentDidMount = () => {
+    // Redirect if the user in already logged in
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/');
+    }
   };
 
   componentWillReceiveProps = nextProp => {
@@ -44,76 +55,40 @@ class Register extends Component {
       <div>
         <h1 className="text-center">Register</h1>
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input
-              type="name"
-              onChange={this.handleChange}
-              value={this.state.name}
-              className={classnames('form-control', {
-                'is-invalid': errors.name
-              })}
-              name="name"
-              id="name"
-              placeholder="name"
-            />
-            {errors.name && (
-              <div className="invalid-feedback">{errors.name}</div>
-            )}
-          </div>
+          <TextFieldGroup
+            name="name"
+            type="name"
+            onChange={this.handleChange}
+            value={this.state.name}
+            error={errors.name}
+          />
 
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              onChange={this.handleChange}
-              value={this.state.email}
-              className={classnames('form-control', {
-                'is-invalid': errors.email
-              })}
-              name="email"
-              id="email"
-              placeholder="email"
-            />
-            {errors.email && (
-              <div className="invalid-feedback">{errors.email}</div>
-            )}
-          </div>
+          <TextFieldGroup
+            name="email"
+            type="email"
+            onChange={this.handleChange}
+            value={this.state.email}
+            error={errors.email}
+          />
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              onChange={this.handleChange}
-              value={this.state.password}
-              className={classnames('form-control', {
-                'is-invalid': errors.password
-              })}
-              name="password"
-              id="password"
-              placeholder="password"
-            />
-            {errors.password && (
-              <div className="invalid-feedback">{errors.password}</div>
-            )}
-          </div>
-          <div className="form-group">
-            <label htmlFor="password2">Confirm Password</label>
-            <input
-              type="password"
-              onChange={this.handleChange}
-              value={this.state.password2}
-              className={classnames('form-control', {
-                'is-invalid': errors.name
-              })}
-              name="password2"
-              id="password2"
-              placeholder="Confirm the password"
-            />
-            {errors.password2 && (
-              <div className="invalid-feedback">{errors.password2}</div>
-            )}
-          </div>
+          <TextFieldGroup
+            name="password"
+            type="password"
+            onChange={this.handleChange}
+            value={this.state.password}
+            error={errors.password}
+          />
+
+          <TextFieldGroup
+            name="password2"
+            type="password"
+            onChange={this.handleChange}
+            value={this.state.password2}
+            error={errors.password2}
+            placeholder="Confirm the password"
+            label="Password, again"
+          />
+
           <br />
           <button type="submit" className="btn btn-primary">
             Submit
