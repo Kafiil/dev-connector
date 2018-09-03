@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { logoutUser } from '../../actions/authActions';
+import { clearCurrentProfile } from '../../actions/profileActions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from 'reactstrap';
@@ -18,7 +19,9 @@ class MainNavbar extends Component {
     if (this.state.isOpen) this.setState({ isOpen: false });
   };
 
-  logout = () => {
+  logout = e => {
+    e.preventDefault();
+    this.props.clearCurrentProfile();
     this.props.logoutUser();
   };
 
@@ -113,5 +116,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, clearCurrentProfile }
 )(MainNavbar);

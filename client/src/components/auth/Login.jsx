@@ -33,7 +33,7 @@ class Login extends Component {
   componentDidMount = () => {
     // Redirect if the user in already logged in
     if (this.props.auth.isAuthenticated) {
-      this.props.history.push('/');
+      this.props.history.push('/dashboard');
     }
   };
 
@@ -43,7 +43,7 @@ class Login extends Component {
     }
 
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push('/');
+      this.props.history.push('/dashboard');
     }
   };
   render() {
