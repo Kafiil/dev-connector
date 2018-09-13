@@ -37,6 +37,15 @@ class MainNavbar extends Component {
       <React.Fragment>
         <Nav navbar>
           <NavItem>
+            <Link
+              className="nav-link"
+              onClick={this.toggleItem}
+              to="/dashboard"
+            >
+              &nbsp; Dashboard
+            </Link>
+          </NavItem>
+          <NavItem>
             <Link className="nav-link" onClick={this.toggleItem} to="/profiles">
               &nbsp; Profiles
             </Link>
