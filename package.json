@@ -9,7 +9,7 @@
     "server": "nodemon server.js",
     "client": "cd client && npm start",
     "dev": "concurrently --kill-others-on-fail \"npm run client\"  \"npm run server\"",
-    "build": ""
+    "build": "npm run client-install && npm i && npm run dev"
   },
   "author": "Kafil NASDAMI",
   "license": "ISC",
